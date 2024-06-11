@@ -422,8 +422,10 @@ def config_parser():
 
     import configargparse
     parser = configargparse.ArgumentParser()
-    parser.add_argument('--config', is_config_file=True, 
+    parser.add_argument('--config', is_config_file=True,
                         help='config file path')
+    # parser.add_argument('--config', default='./configs/lego.txt',
+    #                     help='config file path')
     parser.add_argument("--expname", type=str, 
                         help='experiment name')
     parser.add_argument("--basedir", type=str, default='./logs/', 
@@ -535,6 +537,7 @@ def train():
 
     parser = config_parser()
     args = parser.parse_args()
+    #datadir='./data/nerf_synthetic/lego'
 
     # Load data
     K = None
@@ -566,16 +569,22 @@ def train():
             far = 1.
         print('NEAR FAR', near, far)
 
-    elif args.dataset_type == 'blender':
+    elif args.dataset_type == 'blender': # run lego
         images, poses, render_poses, hwf, i_split = load_blender_data(args.datadir, args.half_res, args.testskip)
         print('Loaded blender', images.shape, render_poses.shape, hwf, args.datadir)
+        # Loaded blender (138, 400, 400, 4) torch.Size([40, 4, 4]) /
+        # [400, 400, 555.5555155968841] ./data/nerf_synthetic/lego
         i_train, i_val, i_test = i_split
+        #  i_split:list size 3
+        # i_train:(100,), i_val:(13,), i_test:(25:)
+
 
         near = 2.
         far = 6.
 
-        if args.white_bkgd:
+        if args.white_bkgd: # True
             images = images[...,:3]*images[...,-1:] + (1.-images[...,-1:])
+            #(138,400,400,3)
         else:
             images = images[...,:3]
 

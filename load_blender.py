@@ -35,11 +35,15 @@ def pose_spherical(theta, phi, radius):
 
 
 def load_blender_data(basedir, half_res=False, testskip=1):
+    # half_res = true, basedir:'./data/nerf_synthetic/lego',testskip:8
     splits = ['train', 'val', 'test']
     metas = {}
     for s in splits:
         with open(os.path.join(basedir, 'transforms_{}.json'.format(s)), 'r') as fp:
             metas[s] = json.load(fp)
+    #meta:dict 3
+    #meta['train']:dict 2;camera_angle_x,frames: list 100
+    #frames[i]: dict 3;file_path,rotation,transform_matrix
 
     all_imgs = []
     all_poses = []
@@ -55,25 +59,34 @@ def load_blender_data(basedir, half_res=False, testskip=1):
             
         for frame in meta['frames'][::skip]:
             fname = os.path.join(basedir, frame['file_path'] + '.png')
+            # fname:'./data/nerf_synthetic/lego/./train/r_99.png'
             imgs.append(imageio.imread(fname))
             poses.append(np.array(frame['transform_matrix']))
         imgs = (np.array(imgs) / 255.).astype(np.float32) # keep all 4 channels (RGBA)
+        #imgs:(100,800,800,4);100-pic, H-800,W-800,channel-4
         poses = np.array(poses).astype(np.float32)
+        #poses:(100,4,4)
         counts.append(counts[-1] + imgs.shape[0])
         all_imgs.append(imgs)
         all_poses.append(poses)
     
     i_split = [np.arange(counts[i], counts[i+1]) for i in range(3)]
+    #list 3:(100,),(13,),(25,)
     
     imgs = np.concatenate(all_imgs, 0)
+    #(138,800,800,4)
     poses = np.concatenate(all_poses, 0)
+    #(138,4,4)
     
     H, W = imgs[0].shape[:2]
+    # 800,800
     camera_angle_x = float(meta['camera_angle_x'])
+    # 0.6911112070083618
     focal = .5 * W / np.tan(.5 * camera_angle_x)
+    #1111.1110311937682
     
     render_poses = torch.stack([pose_spherical(angle, -30.0, 4.0) for angle in np.linspace(-180,180,40+1)[:-1]], 0)
-    
+
     if half_res:
         H = H//2
         W = W//2
