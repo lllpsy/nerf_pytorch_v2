@@ -63,7 +63,7 @@ def load_blender_data(basedir, half_res=False, testskip=1):
             imgs.append(imageio.imread(fname))
             poses.append(np.array(frame['transform_matrix']))
         imgs = (np.array(imgs) / 255.).astype(np.float32) # keep all 4 channels (RGBA)
-        #imgs:(100,800,800,4);100-pic, H-800,W-800,channel-4
+        #imgs_0:(100,800,800,4);100-pic, H-800,W-800,channel-4
         poses = np.array(poses).astype(np.float32)
         #poses:(100,4,4)
         counts.append(counts[-1] + imgs.shape[0])
@@ -96,7 +96,7 @@ def load_blender_data(basedir, half_res=False, testskip=1):
         for i, img in enumerate(imgs):
             imgs_half_res[i] = cv2.resize(img, (W, H), interpolation=cv2.INTER_AREA)
         imgs = imgs_half_res
-        # imgs = tf.image.resize_area(imgs, [400, 400]).numpy()
+        # imgs_0 = tf.image.resize_area(imgs_0, [400, 400]).numpy()
 
         
     return imgs, poses, render_poses, [H, W, focal], i_split

@@ -15,7 +15,7 @@ from run_nerf_helpers import *
 
 from load_llff import load_llff_data
 from load_deepvoxels import load_dv_data
-from load_blender import load_blender_data
+from load_blender_small_data import load_blender_data
 from load_LINEMOD import load_LINEMOD_data
 
 
@@ -424,7 +424,7 @@ def config_parser():
     parser = configargparse.ArgumentParser()
     parser.add_argument('--config', is_config_file=True,
                         help='config file path')
-    # parser.add_argument('--config', default='./configs/lego.txt',
+    # parser.add_argument('--config', default='./configs/robo_test.txt',
     #                     help='config file path')
     parser.add_argument("--expname", type=str, 
                         help='experiment name')
@@ -525,7 +525,7 @@ def config_parser():
                         help='frequency of tensorboard image logging')
     parser.add_argument("--i_weights", type=int, default=10000, 
                         help='frequency of weight ckpt saving')
-    parser.add_argument("--i_testset", type=int, default=50000, 
+    parser.add_argument("--i_testset", type=int, default=50000,
                         help='frequency of testset saving')
     parser.add_argument("--i_video",   type=int, default=50000, 
                         help='frequency of render_poses video saving')
@@ -578,6 +578,13 @@ def train():
         #  i_split:list size 3
         # i_train:(100,), i_val:(13,), i_test:(25:)
 
+        #melody/0624 update
+        #================
+        if i_val.size==0:
+            i_val = i_test
+
+
+        #===================
 
         near = 2.
         far = 6.
@@ -707,8 +714,9 @@ def train():
         rays_rgb = torch.Tensor(rays_rgb).to(device)
 
 
-    N_iters = 200000 + 1
-    print('Begin')
+    # N_iters = 200000 + 1
+    N_iters = 10000 + 1
+    print('Begin, now we use a small iteration')
     print('TRAIN views are', i_train)
     print('TEST views are', i_test)
     print('VAL views are', i_val)
