@@ -108,7 +108,14 @@ poses = np.array(poses).astype(np.float32)
 
 ```python
 camera_angle_x = float(metas[frame_no]['camera_angle_x'])
+
 # 0.7853981633974483
 ```
+
+# result
+
+![image](https://github.com/lllpsy/rl-lab/assets/59329407/7eb7bf71-b610-4e0f-9ed2-34e27dc50bcb)
+
+[TRAIN] Iter: 10000 Loss: 0.001231816248036921  PSNR: 31.56230926513672   
 
 
