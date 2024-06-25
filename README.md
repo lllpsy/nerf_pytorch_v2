@@ -140,4 +140,7 @@ N_iters = 200000+1->100000 + 1
 ![image](https://github.com/lllpsy/nerf_pytorch_v2/assets/59329407/c4303114-43cd-4fb0-b092-3bb3a4f5f29b)
 
 
+[TRAIN] Iter: 100000 Loss: 6.640172614424955e-06  PSNR: 54.33806610107422
+
+
 
