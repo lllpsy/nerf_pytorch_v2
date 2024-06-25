@@ -113,9 +113,31 @@ camera_angle_x = float(metas[frame_no]['camera_angle_x'])
 ```
 
 # result
+after 10000 iterations:
+
+N_rand = 1024->256
+
+N_samples = 64->32
+
+N_importance = 128->64
+
+precrop_iters = 500->50
+
+N_iters = 200000+1->10000 + 1
+
 
 ![image](https://github.com/lllpsy/rl-lab/assets/59329407/7eb7bf71-b610-4e0f-9ed2-34e27dc50bcb)
 
+
 [TRAIN] Iter: 10000 Loss: 0.001231816248036921  PSNR: 31.56230926513672   
+
+
+after 100000 iterations:
+
+N_rand = 1024->256
+
+N_iters = 200000+1->100000 + 1
+![image](https://github.com/lllpsy/nerf_pytorch_v2/assets/59329407/c4303114-43cd-4fb0-b092-3bb3a4f5f29b)
+
 
 
