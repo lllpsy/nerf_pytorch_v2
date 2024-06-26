@@ -6,5 +6,8 @@
 *.npz
 *.dae
 data/*
+!data/nerf_synthetic/
+!data/nerf_synthetic/robo/
+!data/nerf_synthetic/robo/**
 logs/*
 

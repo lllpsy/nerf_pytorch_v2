@@ -11,6 +11,7 @@ from tqdm import tqdm, trange
 
 import matplotlib.pyplot as plt
 
+
 from run_nerf_helpers import *
 
 from load_llff import load_llff_data
@@ -715,7 +716,7 @@ def train():
 
 
     # N_iters = 200000 + 1
-    N_iters = 200000 + 1
+    N_iters = 100000 + 1
     print('Begin, now we use a small iteration')
     print('TRAIN views are', i_train)
     print('TEST views are', i_test)
