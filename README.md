@@ -107,6 +107,10 @@ camera_angle_x = float(metas[frame_no]['camera_angle_x'])
 
 # result
 
+
+5 train images
+
+
 this is the result for new dataset without test
 
 
@@ -154,6 +158,9 @@ N_iters = 200000+1->100000 + 1
 
 
 # if we add a test image?
+
+4 train images and 1 test/val image
+
 
 continue to modify the code to pad the image and generate the correct test image
 
