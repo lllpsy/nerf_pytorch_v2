@@ -158,13 +158,67 @@ N_iters = 200000+1->100000 + 1
 continue to modify the code to pad the image and generate the correct test image
 
 
-under
+in configs/robo_test.txt
+
+```
+white_bkgd = True
+```
 
 
+
+in load_blender_small_data.py
+
+```python
+def pad_image(image, macro_block_size=16):
+    height, width = image.shape[:2]
+    new_height = ((height + macro_block_size - 1) // macro_block_size) * macro_block_size
+    new_width = ((width + macro_block_size - 1) // macro_block_size) * macro_block_size
+    padded_image = np.zeros((new_height, new_width, 3), dtype=image.dtype)
+    padded_image[:height, :width] = image
+    alpha_channel = np.zeros((new_height, new_width, 1), dtype=image.dtype)
+    alpha_channel[:height, :width] = 255
+    padded_image_rgba = np.concatenate((padded_image, alpha_channel), axis=-1)
+    return padded_image_rgba
+
+```
+
+
+
+in def load_blender_data(basedir, half_res=False, testskip=1):
+
+```python
+    imgs=[]    
+    
+    for frame in metas[frame_no]['frames'][::1]:
+        fname = os.path.join(basedir,frame['file_path'] + '.png')
+        img = imageio.imread(fname)
+        img = pad_image(img)
+        imgs.append(img)
+        poses.append(np.array(frame['transform_matrix']))
+
+ # imgs:(5,96,96,4)
+```
+
+
+
+
+
+in run_nerf_helpers.py
+
+```python
+def to8b(x):
+    x = np.nan_to_num(x, nan=0.0, posinf=1.0, neginf=0.0)
+    x = np.clip(x, 0, 1)
+    return (255 * x).astype(np.uint8)
+
+```
 
 
 
 when iteration is 200k:
 
 ![image](https://github.com/lllpsy/nerf_pytorch_v2/assets/59329407/30f00e57-a570-44a3-bc62-2f1f14673e3d)
+
+
+however, unfortunately, it can't generate a clear test image
 
