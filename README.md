@@ -4,6 +4,8 @@ add a new configuration file:
 
 in configs/robo_test.txt
 
+(this is for 100k iterations)
+
 
 
 ```
@@ -20,20 +22,20 @@ lrate_decay = 500
 
 
 
-i_img = 100000
-i_weights = 500
-i_testset = 100000
+i_img = 400000
+i_weights = 10000
+i_testset = 400000
 i_video = 100000
-i_print = 10
+i_print = 100
 
 N_rand = 256
-N_samples = 32
-N_importance = 64
+N_samples = 64
+N_importance = 128
 
 precrop_iters = 500
 precrop_frac = 0.5
 
-half_res = False
+half_res = True
 ```
 
 
@@ -44,23 +46,14 @@ things I’ve changed
 
 > white_bkgd: false
 >
-> half_res:false
+> i_img = 500->400k
 >
-> i_img = 50->100000
+> i_testset = 50k->400k
 >
-> i_testset = 2500->100000
+> i_video = 50k->400k
 >
-> i_video = 2500->100000
+> N_rand = 1024->256
 >
-> lrate= 5e-4
->
-> i_weights:10000->500
->
-> i_print:100->10
->
-> N_rand = 1024->256 N_samples = 64->32 N_importance = 128->64
->
-> precrop_iters = 500->50
 
 
 
@@ -113,17 +106,30 @@ camera_angle_x = float(metas[frame_no]['camera_angle_x'])
 ```
 
 # result
+
+this is the result for new dataset without test
+
+
+white_bkgd: false
+
+
 after 10000 iterations:
+
 
 half_res = False
 
+
 N_rand = 1024->256
+
 
 N_samples = 64->32
 
+
 N_importance = 128->64
 
+
 precrop_iters = 500->50
+
 
 N_iters = 200000+1->10000 + 1
 
@@ -147,6 +153,18 @@ N_iters = 200000+1->100000 + 1
 [TRAIN] Iter: 100000 Loss: 6.640172614424955e-06  PSNR: 54.33806610107422
 
 
-# temp
+# if we add a test image?
+
+continue to modify the code to pad the image and generate the correct test image
+
+
+under
+
+
+
+
+
+when iteration is 200k:
+
 ![image](https://github.com/lllpsy/nerf_pytorch_v2/assets/59329407/30f00e57-a570-44a3-bc62-2f1f14673e3d)
 
