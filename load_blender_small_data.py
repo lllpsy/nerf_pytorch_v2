@@ -55,10 +55,10 @@ def load_blender_data(basedir, half_res=False, testskip=1):
         metas[frame_no] = json.load(fp)
 
 
-    i_split = [np.arange(4),np.array([]),np.arange(4,5)]
+    # i_split = [np.arange(4),np.array([]),np.arange(4,5)]
     # train-3  test,val-1
 
-    # i_split = [np.arange(5), np.array([]), np.array([])]
+    i_split = [np.arange(5), np.array([]), np.array([])]
 
     # imgs=[]
     # poses=[]

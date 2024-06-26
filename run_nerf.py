@@ -715,7 +715,7 @@ def train():
 
 
     # N_iters = 200000 + 1
-    N_iters = 200000 + 1
+    N_iters = 100000 + 1
     print('Begin, now we use a small iteration')
     print('TRAIN views are', i_train)
     print('TEST views are', i_test)
