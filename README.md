@@ -115,6 +115,8 @@ camera_angle_x = float(metas[frame_no]['camera_angle_x'])
 # result
 after 10000 iterations:
 
+half_res = False
+
 N_rand = 1024->256
 
 N_samples = 64->32
@@ -135,6 +137,8 @@ N_iters = 200000+1->10000 + 1
 after 100000 iterations:
 
 N_rand = 1024->256
+
+half_res = True
 
 N_iters = 200000+1->100000 + 1
 ![image](https://github.com/lllpsy/nerf_pytorch_v2/assets/59329407/c4303114-43cd-4fb0-b092-3bb3a4f5f29b)
